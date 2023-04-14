@@ -76,6 +76,7 @@ class SecondFragment : Fragment() {
                 }
                 nameField.setText(name)
 
+
                 linearLayout.addView(childView)
             }
             val childView1 = inflater.inflate(R.layout.button_izracunaj_i_dodaj, container, false)
@@ -86,6 +87,10 @@ class SecondFragment : Fragment() {
         val removeKomarnik = _view.findViewById<Button>(R.id.buttonIzbrisi)
         val calculateButton = _view.findViewById<Button>(R.id.buttonIzracunaj)
         val calculatePriceButton = _view.findViewById<Button>(R.id.buttonCena)
+
+
+
+
 
         addKomarnikButton.setOnClickListener {
             container.removeViewAt(0)
@@ -101,7 +106,6 @@ class SecondFragment : Fragment() {
                 if(numberOfKomarnik == listOfDim.size )
                     listOfDim.removeAt(listOfDim.size - 1)
                 numberOfKomarnik -= 1
-
             }
             if (linearLayout.childCount == 1){
                 removeKomarnik.visibility = View.GONE
@@ -152,6 +156,10 @@ class SecondFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val calculateButton = view.findViewById<Button>(R.id.buttonIzracunaj)
+        //Propabacija podataka sa prvog fragmenta
+        var name = requireArguments().getString("name")
+        var adress = requireArguments().getString("adress")
+        var number = requireArguments().getString("number")
 
         calculateButton.setOnClickListener{
             if (linearLayout.childCount > 1) {
@@ -161,6 +169,9 @@ class SecondFragment : Fragment() {
                     findNavController().navigate(R.id.action_SecondFragment_to_thirdFragment,
                         Bundle().apply {
                             putSerializable("mapOfDimensions", mutableMap as java.io.Serializable)
+                            putString("name", name)
+                            putString("adress", adress)
+                            putString("number", number)
                         })
                 }
             }
@@ -174,6 +185,9 @@ class SecondFragment : Fragment() {
                     findNavController().navigate(R.id.action_SecondFragment_to_fourthFragment,
                         Bundle().apply {
                             putSerializable("mapOfDimensions", mutableMap as java.io.Serializable)
+                            putString("name", name)
+                            putString("adress", adress)
+                            putString("number", number)
                         })
                 }
             }

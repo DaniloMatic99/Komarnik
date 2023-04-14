@@ -1,13 +1,20 @@
 package com.example.komarnik
 
+import android.app.AlertDialog
+import android.content.ContentValues
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.os.Environment
+import android.provider.MediaStore
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.LinearLayout
-import android.widget.ScrollView
+import android.widget.*
+import java.io.File
+import java.io.OutputStream
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -25,6 +32,7 @@ class FifthFragment : Fragment() {
     private var param2: String? = null
     private lateinit var _view : View
     private lateinit var linearLayout: LinearLayout
+    private var totalPriceD :Double= 0.0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,7 +57,7 @@ class FifthFragment : Fragment() {
         linearLayout = LinearLayout(activity)
         linearLayout.orientation = LinearLayout.VERTICAL
 
-        var totalPriceD :Double= 0.0
+
         for ((key, value) in mapOfDimensions){
             val childView = inflater.inflate(R.layout.show_price, container, false)
             val nameField = childView.findViewById<EditText>(R.id.editTextKomarnikPrice)
@@ -85,10 +93,101 @@ class FifthFragment : Fragment() {
         totalPriceField.isEnabled = false
 
         linearLayout.addView(childView)
+
+        val childView1 = inflater.inflate(R.layout.button_sacuvaj,container, false)
+        linearLayout.addView(childView1)
+
         container.addView(linearLayout)
         return _view
     }
+    private fun showSaveDialog() {
+        var name = requireArguments().getString("name")
+        name = "$name- ponuda"
+        val filenameEditText = EditText(requireContext())
+        filenameEditText.setText(name)
+        val dialog = AlertDialog.Builder(requireContext())
+            .setTitle("Sačuvaj fajl")
+            .setMessage("Unesi ime fajla:")
+            .setView(filenameEditText)
+            .setPositiveButton("Sačuvaj") { _, _ ->
+                val filename = filenameEditText.text.toString().trim()
+                if (filename.isNotEmpty()) {
+                    saveToFile("$filename.txt")
+                } else {
+                    Toast.makeText(requireContext(), "Unesi ime fajla", Toast.LENGTH_SHORT).show()
+                }
+            }
+            .setNegativeButton("Otkaži", null)
+            .create()
 
+        dialog.show()
+    }
+    private fun saveToFile(fileName: String) {
+        //val fileName = "my_file.txt" // name of the file you want to save
+        var mapOfDimensions = requireArguments()
+            .getSerializable("mapOfDimensions") as MutableMap<String, Pair<Double, Double>>
+        var price = requireArguments().getString("price")
+        var namePerson = requireArguments().getString("name")
+        var adress = requireArguments().getString("adress")
+        var phoneNumber = requireArguments().getString("number")
+        var fileContents: String = namePerson.toString()
+        for ((key,value) in mapOfDimensions) {
+            val nameKomarnik = key
+            val width :Double= value.first
+            val height :Double= value.second
+            val dimension :Double= (width/100) * (height/100)
+            val finalPriceD : Double = dimension * price!!.toDouble()
+
+            fileContents = fileContents +
+                    "\n" +
+                    "\n------------------------------------------------------\n" +
+                    "${key}\n" +
+                    "Širina X Visina:   ${width}cm X ${height}cm\n" +
+                    "Dimenzije:         $dimension m\u00B2\n" +
+                    "Cena:              ${finalPriceD}\n" +
+                    "------------------------------------------------------\n"
+        }
+
+        fileContents = fileContents +
+                    "\n\n\n------------------------------------------------------\n" +
+                    "Ukupna cena:       ${totalPriceD}\n" +
+                    "------------------------------------------------------\n"
+
+        fileContents = fileContents + "\n" +
+                "\n" +
+                "\n" +
+                    "Ime i prezime:     ${namePerson}\n" +
+                    "Adresa:            ${adress}\n" +
+                    "Broj telefona:     ${phoneNumber}\n"
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                val values = ContentValues().apply {
+                    put(MediaStore.MediaColumns.DISPLAY_NAME, fileName)
+                    put(MediaStore.MediaColumns.MIME_TYPE, "text/plain")
+                    put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DOCUMENTS)
+                }
+                val uri: Uri? = context?.contentResolver?.insert(MediaStore.Files.getContentUri("external"), values)
+                val outputStream: OutputStream? = uri?.let { context?.contentResolver?.openOutputStream(it) }
+                outputStream?.use { it.write(fileContents.toByteArray()) }
+            } else {
+                val file = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), "fileName")
+                file.writeText(fileContents)
+            }
+
+            Toast.makeText(context, "File saved successfully", Toast.LENGTH_SHORT).show()
+        } catch (e: Exception) {
+            Log.e("TAG", "Error writing file", e)
+            Toast.makeText(context, "Error writing file", Toast.LENGTH_SHORT).show()
+        }
+    }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val saveButton = view.findViewById<Button>(R.id.buttonSacuvaj)
+        saveButton.setOnClickListener{
+            showSaveDialog()
+        }
+
+    }
     companion object {
         /**
          * Use this factory method to create a new instance of

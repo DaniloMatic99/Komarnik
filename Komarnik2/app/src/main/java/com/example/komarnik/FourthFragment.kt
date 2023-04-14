@@ -46,7 +46,9 @@ class FourthFragment : Fragment() {
         _view = inflater.inflate(R.layout.fragment_fourth, container, false)
         var mapOfDimensions = requireArguments()
             .getSerializable("mapOfDimensions") as MutableMap<String, Pair<Double, Double>>
-
+        var name = requireArguments().getString("name")
+        var adress = requireArguments().getString("adress")
+        var number = requireArguments().getString("number")
 
         val calculatePriceButton = _view.findViewById<Button>(R.id.buttonCalcPrice)
         calculatePriceButton.setOnClickListener{
@@ -60,6 +62,9 @@ class FourthFragment : Fragment() {
                     Bundle().apply {
                         putSerializable("mapOfDimensions", mapOfDimensions as java.io.Serializable)
                         putString("price", price)
+                        putString("name", name)
+                        putString("adress", adress)
+                        putString("number", number)
                     })
             }
         }

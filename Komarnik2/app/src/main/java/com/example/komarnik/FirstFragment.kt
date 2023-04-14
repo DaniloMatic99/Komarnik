@@ -33,19 +33,21 @@ class FirstFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        var number : EditText = view.findViewById(R.id.editTextNumber)
+
+        var nameSurname : EditText = view.findViewById(R.id.editTextImePrezime)
+        var adressEdit: EditText = view.findViewById(R.id.editTextAdresa)
+        var phoneNumber : EditText = view.findViewById(R.id.editTextBroj)
 
         binding.buttonGoToCalc.setOnClickListener {
-            var num = number.text.toString()
-            if(num == "" || num.toInt() <= 0){
-                Toast.makeText(this.context,"Unesi broj različit od 0", Toast.LENGTH_LONG).show()
-            }else {
-                findNavController().navigate(
-                    R.id.action_FirstFragment_to_SecondFragment,
-                    Bundle().apply {
-                        putString("number", num)
-                    })
-            }
+            var name = nameSurname.text.toString()
+            var adress = adressEdit.text.toString()
+            var number = phoneNumber.text.toString()
+            findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment,
+                Bundle().apply {
+                    putString("name", name)
+                    putString("adress", adress)
+                    putString("number", number)
+                })
         }
     }
 

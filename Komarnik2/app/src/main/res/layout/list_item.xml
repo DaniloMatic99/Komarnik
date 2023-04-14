@@ -31,8 +31,6 @@
                 android:layout_marginVertical="10dp"
                 >
 
-
-
                 <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
@@ -42,6 +40,7 @@
                     android:background="@drawable/background_shape"
                     android:elevation="3dp"
                     >
+
                     <EditText
                         android:id="@+id/editTextKomarnikFirst"
                         android:layout_width="match_parent"
@@ -50,12 +49,12 @@
                         android:layout_marginLeft="3dp"
                         android:layout_marginRight="3dp"
                         android:text="Komarnik"
-
                         android:background="@drawable/text_shape"
                         android:padding="12dp"
                         android:textColor="@color/black"
                         android:textSize="16sp"
                         />
+
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/textSirina"
                         android:layout_width="match_parent"

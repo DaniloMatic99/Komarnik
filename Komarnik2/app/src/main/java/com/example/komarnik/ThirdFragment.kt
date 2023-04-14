@@ -58,6 +58,7 @@ class ThirdFragment : Fragment() {
         var mapOfDimensions = requireArguments()
             .getSerializable("mapOfDimensions") as MutableMap<String, Pair<Double, Double>>
 
+
         val list : MutableList<Pair<Double, Double>> = mutableListOf()
         for((key,pair) in mapOfDimensions){
             list.add(pair)
@@ -127,27 +128,10 @@ class ThirdFragment : Fragment() {
     }
 
     private fun showSaveDialog() {
-        //val dialog = Dialog(requireContext())
-        //dialog.setContentView(R.layout.dialog)
-
-        //val editTextFileName = dialog.findViewById<EditText>(R.id.editFileNameText)
-        //val buttonSave = dialog.findViewById<Button>(R.id.buttonSave)
-        //val buttonCancel = dialog.findViewById<Button>(R.id.buttonCancel)
-
-        //buttonSave.setOnClickListener {
-            //val fileName = editTextFileName.text.toString()
-            //saveToFile(fileName)
-          //  dialog.dismiss()
-        //}
-
-        //buttonCancel.setOnClickListener {
-         //   dialog.dismiss()
-       // }
-
-     //   dialog.show()
-
+        var name = requireArguments().getString("name")
+        name = "$name- mere"
         val filenameEditText = EditText(requireContext())
-
+        filenameEditText.setText(name)
         val dialog = AlertDialog.Builder(requireContext())
             .setTitle("Sačuvaj fajl")
             .setMessage("Unesi ime fajla:")
@@ -167,7 +151,9 @@ class ThirdFragment : Fragment() {
     }
     private fun saveToFile(fileName: String) {
         //val fileName = "my_file.txt" // name of the file you want to save
-
+        var name = requireArguments().getString("name")
+        var adress = requireArguments().getString("adress")
+        var phoneNumber = requireArguments().getString("number")
         var fileContents: String = ""
         for ((key,value) in mutableMap) {
             var sirina = value[0].toFloat()
@@ -177,12 +163,18 @@ class ThirdFragment : Fragment() {
             var lajsna = value[4].toFloat()
             var vodjica = value[5].toFloat()
             fileContents = fileContents +
-                "${key}\nŠirina X Dužina:  ${sirina}cm X ${visina}cm\n\n" +
-                        "Mreža:   ${mreza}cm\n" +
-                        "Ručica:  ${rucica}cm\n" +
-                        "Lajsna   ${lajsna}cm\n" +
-                        "Vođica   ${vodjica}cm\n\n\n" // contents of the file
+                "${key}\n" +
+                "Širina X Visina:   ${sirina}cm X ${visina}cm\n\n" +
+                "Mreža:             ${mreza}cm\n" +
+                "Ručica:            ${rucica}cm\n" +
+                "Lajsna             ${lajsna}cm\n" +
+                "Vođica             ${vodjica}cm" +
+                "\n------------------------------------------------------\n\n\n"// contents of the file
         }
+        fileContents = fileContents + "\n\n\n" +
+                "Ime i prezime:     ${name}\n" +
+                "Adresa:            ${adress}\n" +
+                "Broj telefona:     ${phoneNumber}\n"
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 val values = ContentValues().apply {
@@ -197,10 +189,6 @@ class ThirdFragment : Fragment() {
                 val file = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), "fileName")
                 file.writeText(fileContents)
             }
-            //val fileOutputStream = context?.openFileOutput(fileName, Context.MODE_PRIVATE)
-            //val outputStreamWriter = OutputStreamWriter(fileOutputStream)
-            //outputStreamWriter.write(fileContents)
-            //outputStreamWriter.close()
 
             Toast.makeText(context, "File saved successfully", Toast.LENGTH_SHORT).show()
         } catch (e: Exception) {
