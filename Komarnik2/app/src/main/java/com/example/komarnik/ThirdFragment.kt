@@ -86,7 +86,7 @@ class ThirdFragment : Fragment() {
         }
 
         var number : Int = mapOfDimensions.size
-        var preferences : SharedPreferences  = this.requireActivity().getSharedPreferences("MYPREFS", Context.MODE_PRIVATE)
+       // var preferences : SharedPreferences  = this.requireActivity().getSharedPreferences("MYPREFS", Context.MODE_PRIVATE)
 
         val container = _view.findViewById<ScrollView>(R.id.inputFieldsThirdFragment)
         linearLayout = LinearLayout(activity)
@@ -104,28 +104,28 @@ class ThirdFragment : Fragment() {
             val lajsna = childView.findViewById<EditText>(R.id.editTextZavrsna)
             val vodjica = childView.findViewById<EditText>(R.id.editTextVodjice)
 
-            val imageViewMreza = childView.findViewById<ImageView>(R.id.imageMreza)
-            var imageViewMrezaPreferance : String? = preferences.getString("imageMreza","")
-            if(imageViewMrezaPreferance.toString() != "" && !imageViewMrezaPreferance.isNullOrEmpty()){
-                imageViewMreza.setImageURI(imageViewMrezaPreferance.toUri())
-            }
-            val imageViewRucica = childView.findViewById<ImageView>(R.id.imageRucica)
-            var imageViewRucicaPreferance : String? = preferences.getString("imageRucica","")
-            if(imageViewRucicaPreferance.toString() != "" && !imageViewRucicaPreferance.isNullOrEmpty()){
-                imageViewRucica.setImageURI(imageViewRucicaPreferance.toUri())
-            }
-
-            val imageViewZavrsna = childView.findViewById<ImageView>(R.id.imageZavrsna)
-            var imageViewZavrsnaPreferance : String? = preferences.getString("imageZavrsna","")
-            if(imageViewZavrsnaPreferance.toString() != "" && !imageViewZavrsnaPreferance.isNullOrEmpty()){
-                imageViewZavrsna.setImageURI(imageViewZavrsnaPreferance.toUri())
-            }
-
-            val imageViewVodjica = childView.findViewById<ImageView>(R.id.imageVodjice)
-            var imageViewVodjicaPreferance : String? = preferences.getString("imageVodjice","")
-            if(imageViewVodjicaPreferance.toString() != "" && !imageViewVodjicaPreferance.isNullOrEmpty()){
-                imageViewVodjica.setImageURI(imageViewVodjicaPreferance.toUri())
-            }
+//            val imageViewMreza = childView.findViewById<ImageView>(R.id.imageMreza)
+//            var imageViewMrezaPreferance : String? = preferences.getString("imageMreza","")
+//            if(imageViewMrezaPreferance.toString() != "" && !imageViewMrezaPreferance.isNullOrEmpty()){
+//                imageViewMreza.setImageURI(imageViewMrezaPreferance.toUri())
+//            }
+//            val imageViewRucica = childView.findViewById<ImageView>(R.id.imageRucica)
+//            var imageViewRucicaPreferance : String? = preferences.getString("imageRucica","")
+//            if(imageViewRucicaPreferance.toString() != "" && !imageViewRucicaPreferance.isNullOrEmpty()){
+//                imageViewRucica.setImageURI(imageViewRucicaPreferance.toUri())
+//            }
+//
+//            val imageViewZavrsna = childView.findViewById<ImageView>(R.id.imageZavrsna)
+//            var imageViewZavrsnaPreferance : String? = preferences.getString("imageZavrsna","")
+//            if(imageViewZavrsnaPreferance.toString() != "" && !imageViewZavrsnaPreferance.isNullOrEmpty()){
+//                imageViewZavrsna.setImageURI(imageViewZavrsnaPreferance.toUri())
+//            }
+//
+//            val imageViewVodjica = childView.findViewById<ImageView>(R.id.imageVodjice)
+//            var imageViewVodjicaPreferance : String? = preferences.getString("imageVodjice","")
+//            if(imageViewVodjicaPreferance.toString() != "" && !imageViewVodjicaPreferance.isNullOrEmpty()){
+//                imageViewVodjica.setImageURI(imageViewVodjicaPreferance.toUri())
+//            }
 
             val tmp : String = "" + width + "cm X " + height + "cm"
             val printText : String = "$name\n$tmp"
@@ -167,75 +167,73 @@ class ThirdFragment : Fragment() {
 
         container.addView(linearLayout)
 
-
-        //imageMreza
-        imageMreza = _view.findViewById<ImageView>(R.id.imageMreza)
-        imageMreza.setOnClickListener{
-            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
-            intent.type = "image/*"
-            startActivityForResult(intent, 0)
-
-        }
-        imageRucica = _view.findViewById<ImageView>(R.id.imageRucica)
-        imageRucica.setOnClickListener{
-            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
-            intent.type = "image/*"
-            startActivityForResult(intent, 1)
-
-        }
-
-        imageZavrsna = _view.findViewById<ImageView>(R.id.imageZavrsna)
-        imageZavrsna.setOnClickListener{
-            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
-            intent.type = "image/*"
-            startActivityForResult(intent, 2)
-
-        }
-
-        imageVodjice = _view.findViewById<ImageView>(R.id.imageVodjice)
-        imageVodjice.setOnClickListener{
-            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
-            intent.type = "image/*"
-            startActivityForResult(intent, 3)
-
-        }
-
+        /*imageMreza*/
+//        imageMreza = _view.findViewById<ImageView>(R.id.imageMreza)
+//        imageMreza.setOnClickListener{
+//            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+//            intent.type = "image/*"
+//            startActivityForResult(intent, 0)
+//
+//        }
+//        imageRucica = _view.findViewById<ImageView>(R.id.imageRucica)
+//        imageRucica.setOnClickListener{
+//            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+//            intent.type = "image/*"
+//            startActivityForResult(intent, 1)
+//
+//        }
+//
+//        imageZavrsna = _view.findViewById<ImageView>(R.id.imageZavrsna)
+//        imageZavrsna.setOnClickListener{
+//            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+//            intent.type = "image/*"
+//            startActivityForResult(intent, 2)
+//
+//        }
+//
+//        imageVodjice = _view.findViewById<ImageView>(R.id.imageVodjice)
+//        imageVodjice.setOnClickListener{
+//            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+//            intent.type = "image/*"
+//            startActivityForResult(intent, 3)
+//        }
+//
         return _view
     }
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (requestCode == 0 && resultCode == RESULT_OK) {
-            val uri = data?.data
-            // Do something with the selected image URI
-            imageMreza.setImageURI(uri)
-            saveImageUriToSharedPreferences(uri.toString(), "imageMreza")
-
-        }else if (requestCode == 1 && resultCode == RESULT_OK){
-            val uri = data?.data
-            // Do something with the selected image URI
-            imageRucica.setImageURI(uri)
-            saveImageUriToSharedPreferences(uri.toString(), "imageRucica")
-        }else if (requestCode == 2 && resultCode == RESULT_OK){
-            val uri = data?.data
-            // Do something with the selected image URI
-            imageZavrsna.setImageURI(uri)
-            saveImageUriToSharedPreferences(uri.toString(), "imageZavrsna")
-        } else if (requestCode == 3 && resultCode == RESULT_OK){
-            val uri = data?.data
-            // Do something with the selected image URI
-            imageVodjice.setImageURI(uri)
-            saveImageUriToSharedPreferences(uri.toString(), "imageVodjice")
-        }
-    }
-
-    private fun saveImageUriToSharedPreferences(imageUri: String, nameOfImage: String) {
-        var preferences : SharedPreferences  = this.requireActivity().getSharedPreferences("MYPREFS", Context.MODE_PRIVATE)
-        with(preferences.edit()) {
-            putString(nameOfImage,imageUri)
-            apply()
-        }
-    }
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        super.onActivityResult(requestCode, resultCode, data)
+//
+//        if (requestCode == 0 && resultCode == RESULT_OK) {
+//            val uri = data?.data
+//            // Do something with the selected image URI
+//            imageMreza.setImageURI(uri)
+//            saveImageUriToSharedPreferences(uri.toString(), "imageMreza")
+//
+//        }else if (requestCode == 1 && resultCode == RESULT_OK){
+//            val uri = data?.data
+//            // Do something with the selected image URI
+//            imageRucica.setImageURI(uri)
+//            saveImageUriToSharedPreferences(uri.toString(), "imageRucica")
+//        }else if (requestCode == 2 && resultCode == RESULT_OK){
+//            val uri = data?.data
+//            // Do something with the selected image URI
+//            imageZavrsna.setImageURI(uri)
+//            saveImageUriToSharedPreferences(uri.toString(), "imageZavrsna")
+//        } else if (requestCode == 3 && resultCode == RESULT_OK){
+//            val uri = data?.data
+//            // Do something with the selected image URI
+//            imageVodjice.setImageURI(uri)
+//            saveImageUriToSharedPreferences(uri.toString(), "imageVodjice")
+//        }
+//    }
+//
+//    private fun saveImageUriToSharedPreferences(imageUri: String, nameOfImage: String) {
+//        var preferences : SharedPreferences  = this.requireActivity().getSharedPreferences("MYPREFS", Context.MODE_PRIVATE)
+//        with(preferences.edit()) {
+//            putString(nameOfImage,imageUri)
+//            apply()
+//        }
+//    }
 
 
     private fun showSaveDialog() {

@@ -67,8 +67,10 @@ class FifthFragment : Fragment() {
 
             val width :Double= value.first
             val height :Double= value.second
-            val dimension :Double= (width/100) * (height/100)
-
+            var dimension :Double= (width/100) * (height/100)
+            if(dimension < 1.0){
+                dimension = 1.0
+            }
             val dimensionsField = childView.findViewById<EditText>(R.id.editTextDimenzije)
             val stringDimension :String = String.format("%.2f",dimension)
 
@@ -77,7 +79,8 @@ class FifthFragment : Fragment() {
             dimensionsField.isEnabled = false
 
             val priceField = childView.findViewById<EditText>(R.id.editTextCena)
-            val finalPriceD : Double = dimension * price!!.toDouble()
+
+            var finalPriceD : Double = dimension * price!!.toDouble()
             var finalPrice = String.format("%.2f",finalPriceD)
             priceField.setText(finalPrice)
             priceField.isEnabled = false
@@ -139,7 +142,10 @@ class FifthFragment : Fragment() {
         for ((key,value) in mapOfDimensions) {
             val width :Double= value.first
             val height :Double= value.second
-            val dimension :Double= (width/100) * (height/100)
+            var dimension :Double= (width/100) * (height/100)
+            if(dimension < 1.0){
+                dimension = 1.0
+            }
             val dimensionString :String = String.format("%.2f",dimension)
 
             val finalPriceD : Double = dimension * price!!.toDouble()

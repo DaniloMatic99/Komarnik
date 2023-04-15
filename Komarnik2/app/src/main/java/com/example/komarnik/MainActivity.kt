@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.toolbar)
 
-        var preferences : SharedPreferences = getSharedPreferences("MYPREFS", AppCompatActivity.MODE_PRIVATE)
+     //   var preferences : SharedPreferences = getSharedPreferences("MYPREFS", AppCompatActivity.MODE_PRIVATE)
 
 
         //       val navController = findNavController(R.id.nav_host_fragment_content_main)
@@ -51,29 +51,29 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    @RequiresApi(Build.VERSION_CODES.R)
-    fun requestPermission(){
-        val permissions = arrayOf(Manifest.permission.MANAGE_EXTERNAL_STORAGE)
-
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.MANAGE_EXTERNAL_STORAGE)
-            != PackageManager.PERMISSION_GRANTED
-        ) {
-            ActivityCompat.requestPermissions(this, permissions, 0)
-        }
-
-
-    }
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-
-        if (requestCode == 0) {
-            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // Permission granted
-            } else {
-                // Permission denied
-            }
-        }
-    }
+//    @RequiresApi(Build.VERSION_CODES.R)
+//    fun requestPermission(){
+//        val permissions = arrayOf(Manifest.permission.MANAGE_EXTERNAL_STORAGE)
+//
+//        if (ContextCompat.checkSelfPermission(this, Manifest.permission.MANAGE_EXTERNAL_STORAGE)
+//            != PackageManager.PERMISSION_GRANTED
+//        ) {
+//            ActivityCompat.requestPermissions(this, permissions, 0)
+//        }
+//
+//
+//    }
+//    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+//
+//        if (requestCode == 0) {
+//            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                // Permission granted
+//            } else {
+//                // Permission denied
+//            }
+//        }
+//    }
 
     override fun onDestroy() {
         super.onDestroy()
