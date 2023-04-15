@@ -1,9 +1,14 @@
 package com.example.komarnik
 
+import android.app.Activity.RESULT_OK
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.ContentValues
 import android.content.Context
+import android.content.Intent
+import android.content.SharedPreferences
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -16,11 +21,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.FileProvider
+import androidx.core.net.toUri
+import com.bumptech.glide.Glide
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.io.File
 import java.io.OutputStream
 import java.io.OutputStreamWriter
 import java.math.RoundingMode
 import java.text.DecimalFormat
+import java.text.SimpleDateFormat
+import java.util.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -40,6 +54,11 @@ class ThirdFragment : Fragment() {
     val mutableMap: MutableMap<String, List<Double>> = mutableMapOf()
     private var param1: String? = null
     private var param2: String? = null
+    private lateinit var imageMreza :ImageView
+    private lateinit var imageRucica :ImageView
+    private lateinit var imageZavrsna :ImageView
+    private lateinit var imageVodjice :ImageView
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +66,8 @@ class ThirdFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+
+
     }
 
     override fun onCreateView(
@@ -65,6 +86,7 @@ class ThirdFragment : Fragment() {
         }
 
         var number : Int = mapOfDimensions.size
+        var preferences : SharedPreferences  = this.requireActivity().getSharedPreferences("MYPREFS", Context.MODE_PRIVATE)
 
         val container = _view.findViewById<ScrollView>(R.id.inputFieldsThirdFragment)
         linearLayout = LinearLayout(activity)
@@ -81,15 +103,36 @@ class ThirdFragment : Fragment() {
             val rucica = childView.findViewById<EditText>(R.id.editTextRucica)
             val lajsna = childView.findViewById<EditText>(R.id.editTextZavrsna)
             val vodjica = childView.findViewById<EditText>(R.id.editTextVodjice)
-            val dimension = childView.findViewById<TextView>(R.id.textViewDimensions)
+
+            val imageViewMreza = childView.findViewById<ImageView>(R.id.imageMreza)
+            var imageViewMrezaPreferance : String? = preferences.getString("imageMreza","")
+            if(imageViewMrezaPreferance.toString() != "" && !imageViewMrezaPreferance.isNullOrEmpty()){
+                imageViewMreza.setImageURI(imageViewMrezaPreferance.toUri())
+            }
+            val imageViewRucica = childView.findViewById<ImageView>(R.id.imageRucica)
+            var imageViewRucicaPreferance : String? = preferences.getString("imageRucica","")
+            if(imageViewRucicaPreferance.toString() != "" && !imageViewRucicaPreferance.isNullOrEmpty()){
+                imageViewRucica.setImageURI(imageViewRucicaPreferance.toUri())
+            }
+
+            val imageViewZavrsna = childView.findViewById<ImageView>(R.id.imageZavrsna)
+            var imageViewZavrsnaPreferance : String? = preferences.getString("imageZavrsna","")
+            if(imageViewZavrsnaPreferance.toString() != "" && !imageViewZavrsnaPreferance.isNullOrEmpty()){
+                imageViewZavrsna.setImageURI(imageViewZavrsnaPreferance.toUri())
+            }
+
+            val imageViewVodjica = childView.findViewById<ImageView>(R.id.imageVodjice)
+            var imageViewVodjicaPreferance : String? = preferences.getString("imageVodjice","")
+            if(imageViewVodjicaPreferance.toString() != "" && !imageViewVodjicaPreferance.isNullOrEmpty()){
+                imageViewVodjica.setImageURI(imageViewVodjicaPreferance.toUri())
+            }
 
             val tmp : String = "" + width + "cm X " + height + "cm"
             val printText : String = "$name\n$tmp"
             nameEd.setText(printText)
             nameEd.isEnabled = false
 
-          //  dimension.text = tmp
-           /// dimension.isEnabled = false
+
 
             val formatter = DecimalFormat("#.##")
             formatter.roundingMode = RoundingMode.FLOOR // to round down to 2 decimal places
@@ -124,8 +167,76 @@ class ThirdFragment : Fragment() {
 
         container.addView(linearLayout)
 
+
+        //imageMreza
+        imageMreza = _view.findViewById<ImageView>(R.id.imageMreza)
+        imageMreza.setOnClickListener{
+            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+            intent.type = "image/*"
+            startActivityForResult(intent, 0)
+
+        }
+        imageRucica = _view.findViewById<ImageView>(R.id.imageRucica)
+        imageRucica.setOnClickListener{
+            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+            intent.type = "image/*"
+            startActivityForResult(intent, 1)
+
+        }
+
+        imageZavrsna = _view.findViewById<ImageView>(R.id.imageZavrsna)
+        imageZavrsna.setOnClickListener{
+            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+            intent.type = "image/*"
+            startActivityForResult(intent, 2)
+
+        }
+
+        imageVodjice = _view.findViewById<ImageView>(R.id.imageVodjice)
+        imageVodjice.setOnClickListener{
+            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+            intent.type = "image/*"
+            startActivityForResult(intent, 3)
+
+        }
+
         return _view
     }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == 0 && resultCode == RESULT_OK) {
+            val uri = data?.data
+            // Do something with the selected image URI
+            imageMreza.setImageURI(uri)
+            saveImageUriToSharedPreferences(uri.toString(), "imageMreza")
+
+        }else if (requestCode == 1 && resultCode == RESULT_OK){
+            val uri = data?.data
+            // Do something with the selected image URI
+            imageRucica.setImageURI(uri)
+            saveImageUriToSharedPreferences(uri.toString(), "imageRucica")
+        }else if (requestCode == 2 && resultCode == RESULT_OK){
+            val uri = data?.data
+            // Do something with the selected image URI
+            imageZavrsna.setImageURI(uri)
+            saveImageUriToSharedPreferences(uri.toString(), "imageZavrsna")
+        } else if (requestCode == 3 && resultCode == RESULT_OK){
+            val uri = data?.data
+            // Do something with the selected image URI
+            imageVodjice.setImageURI(uri)
+            saveImageUriToSharedPreferences(uri.toString(), "imageVodjice")
+        }
+    }
+
+    private fun saveImageUriToSharedPreferences(imageUri: String, nameOfImage: String) {
+        var preferences : SharedPreferences  = this.requireActivity().getSharedPreferences("MYPREFS", Context.MODE_PRIVATE)
+        with(preferences.edit()) {
+            putString(nameOfImage,imageUri)
+            apply()
+        }
+    }
+
 
     private fun showSaveDialog() {
         var name = requireArguments().getString("name")
@@ -154,7 +265,12 @@ class ThirdFragment : Fragment() {
         var name = requireArguments().getString("name")
         var adress = requireArguments().getString("adress")
         var phoneNumber = requireArguments().getString("number")
-        var fileContents: String = ""
+
+        var content = String.format("%-19s %-30s\n","Ime i prezime:", "${name}")
+        content += String.format("%-19s %-30s\n","Adresa:", "${adress}")
+        content += String.format("%-19s %-30s\n","Broj telefona:", "${phoneNumber}")
+        content += "------------------------------------------------------\n\n\n\n\n"
+
         for ((key,value) in mutableMap) {
             var sirina = value[0].toFloat()
             var visina = value[1].toFloat()
@@ -162,19 +278,18 @@ class ThirdFragment : Fragment() {
             var rucica = value[3].toFloat()
             var lajsna = value[4].toFloat()
             var vodjica = value[5].toFloat()
-            fileContents = fileContents +
-                "${key}\n" +
-                "Širina X Visina:   ${sirina}cm X ${visina}cm\n\n" +
-                "Mreža:             ${mreza}cm\n" +
-                "Ručica:            ${rucica}cm\n" +
-                "Lajsna             ${lajsna}cm\n" +
-                "Vođica             ${vodjica}cm" +
-                "\n------------------------------------------------------\n\n\n"// contents of the file
+
+            content += "------------------------------------------------------\n"
+            content += String.format("%-30s\n", key)
+            content += String.format("%-19s %-30s\n\n","Širina X Visina:", "${sirina}cm X ${visina}cm")
+            content += String.format("%-19s %-30s\n","Mreža:", "${mreza}cm")
+            content += String.format("%-19s %-30s\n","Ručica:", "${rucica}cm")
+            content += String.format("%-19s %-30s\n","Lajsna:", "${lajsna}cm")
+            content += String.format("%-19s %-30s\n","Vođica:", "${vodjica}cm")
+            content += "------------------------------------------------------\n\n"
+
         }
-        fileContents = fileContents + "\n\n\n" +
-                "Ime i prezime:     ${name}\n" +
-                "Adresa:            ${adress}\n" +
-                "Broj telefona:     ${phoneNumber}\n"
+
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 val values = ContentValues().apply {
@@ -184,10 +299,10 @@ class ThirdFragment : Fragment() {
                 }
                 val uri: Uri? = context?.contentResolver?.insert(MediaStore.Files.getContentUri("external"), values)
                 val outputStream: OutputStream? = uri?.let { context?.contentResolver?.openOutputStream(it) }
-                outputStream?.use { it.write(fileContents.toByteArray()) }
+                outputStream?.use { it.write(content.toByteArray()) }
             } else {
                 val file = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), "fileName")
-                file.writeText(fileContents)
+                file.writeText(content)
             }
 
             Toast.makeText(context, "File saved successfully", Toast.LENGTH_SHORT).show()

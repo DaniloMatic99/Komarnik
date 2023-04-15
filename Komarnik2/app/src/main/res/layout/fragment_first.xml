@@ -6,77 +6,93 @@
     android:layout_height="match_parent"
     tools:context=".FirstFragment">
 
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textImePrezime"
+    <ScrollView
+        android:id="@+id/input_fields_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginTop="150dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.23000002">
-
-        <EditText
-            android:id="@+id/editTextImePrezime"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Unesi ime i prezime" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textAdresa"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginTop="30dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textImePrezime">
-
-        <EditText
-            android:id="@+id/editTextAdresa"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Unesi adresu"
-             />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textBroj"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginTop="30dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textAdresa">
-
-        <EditText
-            android:id="@+id/editTextBroj"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Unesi broj telefona"
-            android:inputType="number" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <Button
-        android:id="@+id/buttonGoToCalc"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="30dp"
-        android:text="Dalje"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.266"
-        app:layout_constraintStart_toStartOf="parent"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textImePrezime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginTop="150dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.23000002">
 
-        app:layout_constraintTop_toBottomOf="@+id/textBroj"
-        app:layout_constraintVertical_bias="0.087" />
+                <EditText
+                    android:id="@+id/editTextImePrezime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Unesi ime i prezime" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textAdresa"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginTop="30dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textImePrezime">
+
+                <EditText
+                    android:id="@+id/editTextAdresa"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Unesi adresu"
+                     />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textBroj"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginTop="30dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textAdresa">
+
+                <EditText
+                    android:id="@+id/editTextBroj"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Unesi broj telefona"
+                    android:inputType="number" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/buttonGoToCalc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="30dp"
+                android:text="Dalje"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.266"
+                app:layout_constraintStart_toStartOf="parent"
+
+                app:layout_constraintTop_toBottomOf="@+id/textBroj"
+                app:layout_constraintVertical_bias="0.087" />
+        </LinearLayout>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

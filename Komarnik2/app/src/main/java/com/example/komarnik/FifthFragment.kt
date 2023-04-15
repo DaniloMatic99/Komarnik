@@ -130,35 +130,36 @@ class FifthFragment : Fragment() {
         var namePerson = requireArguments().getString("name")
         var adress = requireArguments().getString("adress")
         var phoneNumber = requireArguments().getString("number")
-        var fileContents: String = namePerson.toString()
+
+        var content = String.format("%-19s %-30s\n","Ime i prezime:", "${namePerson}")
+        content += String.format("%-19s %-30s\n","Adresa:", "${adress}")
+        content += String.format("%-19s %-30s\n","Broj telefona:", "${phoneNumber}")
+        content += "------------------------------------------------------\n\n\n\n\n"
+
         for ((key,value) in mapOfDimensions) {
-            val nameKomarnik = key
             val width :Double= value.first
             val height :Double= value.second
             val dimension :Double= (width/100) * (height/100)
+            val dimensionString :String = String.format("%.2f",dimension)
+
             val finalPriceD : Double = dimension * price!!.toDouble()
+            val finalPriceString :String = String.format("%.2f",finalPriceD)
 
-            fileContents = fileContents +
-                    "\n" +
-                    "\n------------------------------------------------------\n" +
-                    "${key}\n" +
-                    "Širina X Visina:   ${width}cm X ${height}cm\n" +
-                    "Dimenzije:         $dimension m\u00B2\n" +
-                    "Cena:              ${finalPriceD}\n" +
-                    "------------------------------------------------------\n"
+
+            content += "------------------------------------------------------\n"
+            content += String.format("%-30s\n", key)
+            content += String.format("%-19s %-30s\n","Širina X Visina:", "${width}cm X ${height}cm")
+            content += String.format("%-19s %-30s\n","Dimenzije:", "$dimensionString m\u00B2")
+            content += String.format("%-19s %-30s\n","Cena:", finalPriceString)
+            content += "------------------------------------------------------\n\n"
+
         }
-
-        fileContents = fileContents +
-                    "\n\n\n------------------------------------------------------\n" +
-                    "Ukupna cena:       ${totalPriceD}\n" +
-                    "------------------------------------------------------\n"
-
-        fileContents = fileContents + "\n" +
-                "\n" +
-                "\n" +
-                    "Ime i prezime:     ${namePerson}\n" +
-                    "Adresa:            ${adress}\n" +
-                    "Broj telefona:     ${phoneNumber}\n"
+        val totalPriceString :String = String.format("%.2f",totalPriceD)
+        content += "\n\n\n------------------------------------------------------\n"
+        content += String.format("%-19s %-30s\n","Cena po m\u00B2:", price)
+        content += "------------------------------------------------------\n"
+        content += String.format("%-19s %-30s\n","Ukupna cena:", totalPriceString)
+        content += "------------------------------------------------------\n"
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 val values = ContentValues().apply {
@@ -168,10 +169,10 @@ class FifthFragment : Fragment() {
                 }
                 val uri: Uri? = context?.contentResolver?.insert(MediaStore.Files.getContentUri("external"), values)
                 val outputStream: OutputStream? = uri?.let { context?.contentResolver?.openOutputStream(it) }
-                outputStream?.use { it.write(fileContents.toByteArray()) }
+                outputStream?.use { it.write(content.toByteArray()) }
             } else {
                 val file = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), "fileName")
-                file.writeText(fileContents)
+                file.writeText(content)
             }
 
             Toast.makeText(context, "File saved successfully", Toast.LENGTH_SHORT).show()

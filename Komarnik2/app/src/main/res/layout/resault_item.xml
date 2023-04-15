@@ -82,10 +82,13 @@
 
                             <ImageView
                                 android:id="@+id/imageMreza"
+                                android:tag=""
                                 android:layout_width="100dp"
                                 android:layout_height="match_parent"
                                 android:layout_gravity="center"
-                                app:srcCompat="@drawable/ic_baseline_image_24" />
+                                android:adjustViewBounds="true"
+                                android:scaleType="centerCrop"
+                                app:srcCompat="@mipmap/mreza" />
 
                             <com.google.android.material.textfield.TextInputLayout
                                 android:id="@+id/textMreza"
@@ -125,7 +128,9 @@
                                 android:layout_width="100dp"
                                 android:layout_height="match_parent"
                                 android:layout_gravity="center"
-                                app:srcCompat="@drawable/ic_baseline_image_24"
+                                android:adjustViewBounds="true"
+                                android:scaleType="centerCrop"
+                                app:srcCompat="@mipmap/rucica"
                                 />
                             <com.google.android.material.textfield.TextInputLayout
                                 android:id="@+id/textRucica"
@@ -164,7 +169,9 @@
                                 android:id="@+id/imageZavrsna"
                                 android:layout_width="100dp"
                                 android:layout_height="match_parent"
-                                app:srcCompat="@drawable/ic_baseline_image_24"
+                                android:adjustViewBounds="true"
+                                android:scaleType="centerCrop"
+                                app:srcCompat="@mipmap/lajsna"
                                 />
                             <com.google.android.material.textfield.TextInputLayout
                                 android:id="@+id/textZavrsna"
@@ -204,7 +211,9 @@
                                 android:id="@+id/imageVodjice"
                                 android:layout_width="100dp"
                                 android:layout_height="match_parent"
-                                app:srcCompat="@drawable/ic_baseline_image_24"
+                                android:adjustViewBounds="true"
+                                android:scaleType="centerCrop"
+                                app:srcCompat="@mipmap/vodjica"
                                 />
                             <com.google.android.material.textfield.TextInputLayout
                                 android:id="@+id/textVodjice"
